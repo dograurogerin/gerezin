@@ -1,17 +1,31 @@
-// ELEMENTOS DO SITE
+// ELEMENTOS
 
 const form = document.getElementById("pedidoForm");
 const lista = document.getElementById("listaPedidos");
 const campoBusca = document.getElementById("busca");
 
+const recebimento = document.getElementById("recebimento");
+const campoEndereco = document.getElementById("campoEndereco");
+const endereco = document.getElementById("endereco");
 
-// STATUS DISPONÍVEIS
+const pagamento = document.getElementById("pagamento");
+
+
+// STATUS DE PRODUÇÃO
 
 const statusDisponiveis = [
     "Pedido feito",
     "Em preparo",
     "Finalizado",
     "Entregue"
+];
+
+
+// STATUS DE PAGAMENTO
+
+const pagamentosDisponiveis = [
+    "Não pago",
+    "Pago"
 ];
 
 
@@ -33,17 +47,51 @@ try {
 }
 
 
-// GARANTIR STATUS DOS PEDIDOS ANTIGOS
+// ADAPTAR PEDIDOS ANTIGOS
 
 pedidos = pedidos.map(pedido => ({
     ...pedido,
+
     status: statusDisponiveis.includes(pedido.status)
         ? pedido.status
-        : "Pedido feito"
+        : "Pedido feito",
+
+    horario: pedido.horario || "",
+
+    recebimento: pedido.recebimento || "Não informado",
+
+    endereco: pedido.endereco || "",
+
+    pagamento: pedido.pagamento || "Não informado",
+
+    situacaoPagamento:
+        pagamentosDisponiveis.includes(pedido.situacaoPagamento)
+            ? pedido.situacaoPagamento
+            : "Não informado"
 }));
 
 
-// NAVEGAÇÃO ENTRE AS ABAS
+// MOSTRAR OU ESCONDER ENDEREÇO
+
+recebimento.addEventListener("change", function() {
+
+    if (recebimento.value === "Entrega") {
+
+        campoEndereco.classList.add("visivel");
+        endereco.required = true;
+
+    } else {
+
+        campoEndereco.classList.remove("visivel");
+        endereco.required = false;
+        endereco.value = "";
+
+    }
+
+});
+
+
+// NAVEGAÇÃO
 
 document.querySelectorAll("nav button").forEach(botao => {
 
@@ -57,11 +105,9 @@ document.querySelectorAll("nav button").forEach(botao => {
 
         botao.classList.add("active");
 
-        const pagina = document.getElementById(
+        document.getElementById(
             botao.dataset.page
-        );
-
-        pagina.classList.add("active");
+        ).classList.add("active");
 
         atualizarMural();
 
@@ -92,6 +138,19 @@ form.addEventListener("submit", function(event) {
         tipo: document.getElementById("tipo")
             .value,
 
+        horario: document.getElementById("horario")
+            .value,
+
+        recebimento: recebimento.value,
+
+        endereco: recebimento.value === "Entrega"
+            ? endereco.value.trim()
+            : "",
+
+        pagamento: pagamento.value,
+
+        situacaoPagamento: "Não pago",
+
         observacoes: document.getElementById("observacoes")
             .value.trim(),
 
@@ -100,19 +159,17 @@ form.addEventListener("submit", function(event) {
     };
 
 
-    // ADICIONAR PEDIDO À LISTA
-
     pedidos.push(pedido);
 
     salvarDados();
 
-    // LIMPAR FORMULÁRIO
-
     form.reset();
 
-    alert("Pedido cadastrado com sucesso!");
+    campoEndereco.classList.remove("visivel");
 
-    // ABRIR MURAL
+    endereco.required = false;
+
+    alert("Pedido cadastrado com sucesso!");
 
     document.querySelector(
         '[data-page="mural"]'
@@ -121,16 +178,12 @@ form.addEventListener("submit", function(event) {
 });
 
 
-// PESQUISAR EM TEMPO REAL
+// PESQUISA
 
-campoBusca.addEventListener("input", function() {
-
-    atualizarMural();
-
-});
+campoBusca.addEventListener("input", atualizarMural);
 
 
-// SALVAR PEDIDOS NO NAVEGADOR
+// SALVAR DADOS
 
 function salvarDados() {
 
@@ -144,7 +197,7 @@ function salvarDados() {
 }
 
 
-// NORMALIZAR TEXTO PARA PESQUISA
+// NORMALIZAR TEXTO
 
 function normalizarTexto(texto) {
 
@@ -156,21 +209,31 @@ function normalizarTexto(texto) {
 }
 
 
+// CRIAR INFORMAÇÃO NA FICHA
+
+function adicionarCampo(ficha, texto) {
+
+    const paragrafo = document.createElement("p");
+
+    paragrafo.textContent = texto;
+
+    ficha.appendChild(paragrafo);
+
+}
+
+
 // ATUALIZAR MURAL
 
 function atualizarMural() {
 
     lista.innerHTML = "";
 
-
-    // TEXTO DIGITADO NA BUSCA
-
     const pesquisa = normalizarTexto(
         campoBusca.value.trim()
     );
 
 
-    // FILTRAR PEDIDOS PELO NOME OU TELEFONE
+    // FILTRAR POR NOME OU TELEFONE
 
     const pedidosFiltrados = pedidos.filter(pedido => {
 
@@ -184,7 +247,7 @@ function atualizarMural() {
     });
 
 
-    // VERIFICAR SE EXISTEM PEDIDOS
+    // MENSAGEM QUANDO NÃO HÁ PEDIDOS
 
     if (pedidosFiltrados.length === 0) {
 
@@ -201,14 +264,14 @@ function atualizarMural() {
     }
 
 
-    // CRIAR UMA FICHA PARA CADA PEDIDO
+    // CRIAR FICHAS
 
     pedidosFiltrados.forEach(pedido => {
 
         const ficha = document.createElement("div");
 
 
-        // IDENTIFICAR A COR DO STATUS
+        // COR DO STATUS
 
         const classesStatus = {
 
@@ -222,12 +285,11 @@ function atualizarMural() {
 
         };
 
-
         ficha.className = "ficha " +
             (classesStatus[pedido.status] || "status-pedido");
 
 
-        // NOME DO CLIENTE
+        // NOME
 
         const titulo = document.createElement("h3");
 
@@ -238,41 +300,59 @@ function atualizarMural() {
 
         // INFORMAÇÕES DO PEDIDO
 
-        const campos = [
+        adicionarCampo(ficha, "Telefone: " + pedido.telefone);
 
-            "Telefone: " + pedido.telefone,
+        adicionarCampo(ficha, "Quantidade: " + pedido.quantidade);
 
-            "Quantidade: " + pedido.quantidade,
+        adicionarCampo(ficha, "Tipo: " + pedido.tipo);
 
-            "Tipo: " + pedido.tipo,
+        adicionarCampo(
+            ficha,
+            "Horário: " + (pedido.horario || "Não informado")
+        );
 
+        adicionarCampo(
+            ficha,
+            "Recebimento: " + pedido.recebimento
+        );
+
+
+        // ENDEREÇO
+
+        if (pedido.recebimento === "Entrega") {
+
+            adicionarCampo(
+                ficha,
+                "Endereço: " + (pedido.endereco || "Não informado")
+            );
+
+        }
+
+
+        // FORMA DE PAGAMENTO
+
+        adicionarCampo(
+            ficha,
+            "Forma de pagamento: " + pedido.pagamento
+        );
+
+
+        // OBSERVAÇÕES
+
+        adicionarCampo(
+            ficha,
             "Observações: " +
-                (pedido.observacoes || "Nenhuma")
-
-        ];
-
-
-        campos.forEach(texto => {
-
-            const paragrafo = document.createElement("p");
-
-            paragrafo.textContent = texto;
-
-            ficha.appendChild(paragrafo);
-
-        });
+            (pedido.observacoes || "Nenhuma")
+        );
 
 
-        // TEXTO DO STATUS
+        // STATUS DE PRODUÇÃO
 
-        const label = document.createElement("label");
+        const labelStatus = document.createElement("label");
 
-        label.textContent = "Status do pedido";
+        labelStatus.textContent = "Status do pedido";
 
-
-        // SELETOR DE STATUS
-
-        const seletor = document.createElement("select");
+        const seletorStatus = document.createElement("select");
 
 
         statusDisponiveis.forEach(status => {
@@ -284,28 +364,87 @@ function atualizarMural() {
             opcao.textContent = status;
 
             if (pedido.status === status) {
-
                 opcao.selected = true;
-
             }
 
-            seletor.appendChild(opcao);
+            seletorStatus.appendChild(opcao);
 
         });
 
 
-        // ALTERAR STATUS
+        seletorStatus.addEventListener("change", function() {
 
-        seletor.addEventListener("change", function() {
-
-            pedido.status = seletor.value;
+            pedido.status = seletorStatus.value;
 
             salvarDados();
 
         });
 
 
-        // BOTÃO DE EXCLUSÃO
+        ficha.appendChild(labelStatus);
+
+        ficha.appendChild(seletorStatus);
+
+
+        // ÁREA DE PAGAMENTO
+
+        const areaPagamento = document.createElement("div");
+
+        areaPagamento.className = "area-pagamento";
+
+
+        const labelPagamento = document.createElement("label");
+
+        labelPagamento.textContent = "Situação do pagamento";
+
+
+        const seletorPagamento = document.createElement("select");
+
+
+        pagamentosDisponiveis.forEach(status => {
+
+            const opcao = document.createElement("option");
+
+            opcao.value = status;
+
+            opcao.textContent = status;
+
+            if (pedido.situacaoPagamento === status) {
+                opcao.selected = true;
+            }
+
+            seletorPagamento.appendChild(opcao);
+
+        });
+
+
+        // ATUALIZAR PAGAMENTO
+
+        seletorPagamento.addEventListener("change", function() {
+
+            pedido.situacaoPagamento = seletorPagamento.value;
+
+            salvarDados();
+
+        });
+
+
+        // COR DO TEXTO DE PAGAMENTO
+
+        labelPagamento.className =
+            pedido.situacaoPagamento === "Pago"
+                ? "pagamento-pago"
+                : "pagamento-pendente";
+
+
+        areaPagamento.appendChild(labelPagamento);
+
+        areaPagamento.appendChild(seletorPagamento);
+
+        ficha.appendChild(areaPagamento);
+
+
+        // EXCLUIR PEDIDO
 
         const excluir = document.createElement("button");
 
@@ -329,12 +468,6 @@ function atualizarMural() {
         });
 
 
-        // MONTAR FICHA
-
-        ficha.appendChild(label);
-
-        ficha.appendChild(seletor);
-
         ficha.appendChild(excluir);
 
         lista.appendChild(ficha);
@@ -342,7 +475,7 @@ function atualizarMural() {
     });
 
 
-    // ATUALIZAR CONTADORES
+    // CONTADORES DE PRODUÇÃO
 
     document.getElementById("total").textContent =
         pedidos.length;
@@ -362,9 +495,22 @@ function atualizarMural() {
             p => p.status === "Entregue"
         ).length;
 
+
+    // CONTADORES DE PAGAMENTO
+
+    document.getElementById("pagos").textContent =
+        pedidos.filter(
+            p => p.situacaoPagamento === "Pago"
+        ).length;
+
+    document.getElementById("naoPagos").textContent =
+        pedidos.filter(
+            p => p.situacaoPagamento === "Não pago"
+        ).length;
+
 }
 
 
-// INICIAR O SITE
+// INICIAR SITE
 
 atualizarMural();

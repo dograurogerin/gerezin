@@ -9,140 +9,151 @@
 
 <body>
 
-    <header>
-        <h1>Pedidos Gerezin</h1>
-        <p>Gerenciamento de encomendas</p>
-    </header>
+<header>
+    <h1>Pedidos Gerezin</h1>
+    <p>Gerenciamento de encomendas</p>
+</header>
 
-    <nav>
-        <button class="active" data-page="cadastro">
-            Novo Pedido
-        </button>
+<nav>
+    <button class="active" data-page="cadastro">
+        Novo Pedido
+    </button>
 
-        <button data-page="mural">
-            Mural de Pedidos
-        </button>
-    </nav>
+    <button data-page="mural">
+        Mural de Pedidos
+    </button>
+</nav>
 
-    <main>
+<main>
 
-        <!-- PÁGINA DE CADASTRO -->
-        <section id="cadastro" class="pagina active">
+    <!-- CADASTRO -->
 
-            <div class="formulario">
+    <section id="cadastro" class="pagina active">
 
-                <h2>Cadastrar pedido</h2>
+        <div class="formulario">
 
-                <form id="pedidoForm">
+            <h2>Cadastrar pedido</h2>
 
-                    <label for="nome">Nome do cliente</label>
-                    <input
-                        type="text"
-                        id="nome"
-                        placeholder="Nome completo"
-                        required
-                    >
+            <form id="pedidoForm">
 
-                    <label for="telefone">Telefone</label>
-                    <input
-                        type="tel"
-                        id="telefone"
-                        placeholder="(00) 00000-0000"
-                        required
-                    >
+                <label for="nome">Nome do cliente</label>
+                <input type="text" id="nome"
+                    placeholder="Nome completo" required>
 
-                    <label for="quantidade">
-                        Quantidade de salgadinhos
-                    </label>
+                <label for="telefone">Telefone</label>
+                <input type="tel" id="telefone"
+                    placeholder="(00) 00000-0000" required>
 
-                    <input
-                        type="number"
-                        id="quantidade"
-                        min="1"
-                        placeholder="Ex: 100"
-                        required
-                    >
+                <label for="quantidade">
+                    Quantidade de salgadinhos
+                </label>
 
-                    <label for="tipo">
-                        Tipo de salgadinho
-                    </label>
+                <input type="number" id="quantidade"
+                    min="1" placeholder="Ex: 100" required>
 
-                    <select id="tipo" required>
-                        <option value="">Selecione</option>
-                        <option value="Mini">Mini</option>
-                        <option value="Festa">Festa</option>
-                    </select>
+                <label for="tipo">Tipo de salgadinho</label>
 
-                    <label for="observacoes">
-                        Observações
-                    </label>
+                <select id="tipo" required>
+                    <option value="">Selecione</option>
+                    <option value="Mini">Mini</option>
+                    <option value="Festa">Festa</option>
+                </select>
 
-                    <textarea
-                        id="observacoes"
-                        placeholder="Sabores, horários, detalhes..."
-                    ></textarea>
+                <label for="horario">Horário do pedido</label>
+                <input type="time" id="horario" required>
 
-                    <button type="submit" class="salvar">
-                        Salvar pedido
-                    </button>
+                <label for="recebimento">
+                    Tipo de recebimento
+                </label>
 
-                </form>
+                <select id="recebimento" required>
+                    <option value="">Selecione</option>
+                    <option value="Retirada">Retirada</option>
+                    <option value="Entrega">Entrega</option>
+                </select>
 
+                <div id="campoEndereco" class="campo-endereco">
+
+                    <label for="endereco">Endereço de entrega</label>
+
+                    <textarea id="endereco"
+                        placeholder="Rua, número, bairro e complemento"></textarea>
+
+                </div>
+
+                <label for="pagamento">Forma de pagamento</label>
+
+                <select id="pagamento" required>
+                    <option value="">Selecione</option>
+                    <option value="PIX">PIX</option>
+                    <option value="Cartão">Cartão</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                </select>
+
+                <label for="observacoes">Observações</label>
+
+                <textarea id="observacoes"
+                    placeholder="Sabores, detalhes, informações adicionais..."></textarea>
+
+                <button type="submit" class="salvar">
+                    Salvar pedido
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- MURAL -->
+
+    <section id="mural" class="pagina">
+
+        <h2>Mural de pedidos</h2>
+
+        <div class="resumo">
+
+            <div>
+                Todos: <strong id="total">0</strong>
             </div>
 
-        </section>
-
-
-        <!-- PÁGINA DO MURAL -->
-        <section id="mural" class="pagina">
-
-            <h2>Mural de pedidos</h2>
-
-            <!-- CONTADORES -->
-            <div class="resumo">
-
-                <div>
-                    Todos:
-                    <strong id="total">0</strong>
-                </div>
-
-                <div>
-                    Em preparo:
-                    <strong id="preparo">0</strong>
-                </div>
-
-                <div>
-                    Finalizados:
-                    <strong id="finalizados">0</strong>
-                </div>
-
-                <div>
-                    Entregues:
-                    <strong id="entregues">0</strong>
-                </div>
-
+            <div>
+                Em preparo: <strong id="preparo">0</strong>
             </div>
 
-
-            <!-- BUSCA -->
-            <input
-                type="search"
-                id="busca"
-                class="busca"
-                placeholder="🔎 Pesquisar por nome ou telefone..."
-            >
-
-
-            <!-- FICHAS DOS PEDIDOS -->
-            <div id="listaPedidos" class="mural">
-
+            <div>
+                Finalizados: <strong id="finalizados">0</strong>
             </div>
 
-        </section>
+            <div>
+                Entregues: <strong id="entregues">0</strong>
+            </div>
 
-    </main>
+            <div class="resumo-pago">
+                Pagos: <strong id="pagos">0</strong>
+            </div>
 
-    <script src="script.js"></script>
+            <div class="resumo-pendente">
+                Não pagos: <strong id="naoPagos">0</strong>
+            </div>
+
+        </div>
+
+        <input
+            type="search"
+            id="busca"
+            class="busca"
+            placeholder="🔎 Pesquisar por nome ou telefone..."
+        >
+
+        <div id="listaPedidos" class="mural"></div>
+
+    </section>
+
+</main>
+
+<script src="script.js"></script>
 
 </body>
 </html>
