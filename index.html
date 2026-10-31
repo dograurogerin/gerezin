@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerezin</title>
+    <title>Gerezin Salgados</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header>
-    <h1>Pedidos Gerezin</h1>
+    <h1>Pedidos gerezin</h1>
     <p>Gerenciamento de encomendas</p>
 </header>
 
@@ -26,7 +26,7 @@
 
 <main>
 
-    <!-- CADASTRO -->
+    <!-- CADASTRO DE PEDIDOS -->
 
     <section id="cadastro" class="pagina active">
 
@@ -37,19 +37,32 @@
             <form id="pedidoForm">
 
                 <label for="nome">Nome do cliente</label>
-                <input type="text" id="nome"
-                    placeholder="Nome completo" required>
+                <input
+                    type="text"
+                    id="nome"
+                    placeholder="Nome completo"
+                    required
+                >
 
                 <label for="telefone">Telefone</label>
-                <input type="tel" id="telefone"
-                    placeholder="(00) 00000-0000" required>
+                <input
+                    type="tel"
+                    id="telefone"
+                    placeholder="(00) 00000-0000"
+                    required
+                >
 
                 <label for="quantidade">
                     Quantidade de salgadinhos
                 </label>
 
-                <input type="number" id="quantidade"
-                    min="1" placeholder="Ex: 100" required>
+                <input
+                    type="number"
+                    id="quantidade"
+                    min="1"
+                    placeholder="Ex: 100"
+                    required
+                >
 
                 <label for="tipo">Tipo de salgadinho</label>
 
@@ -60,7 +73,12 @@
                 </select>
 
                 <label for="horario">Horário do pedido</label>
-                <input type="time" id="horario" required>
+
+                <input
+                    type="time"
+                    id="horario"
+                    required
+                >
 
                 <label for="recebimento">
                     Tipo de recebimento
@@ -74,14 +92,20 @@
 
                 <div id="campoEndereco" class="campo-endereco">
 
-                    <label for="endereco">Endereço de entrega</label>
+                    <label for="endereco">
+                        Endereço de entrega
+                    </label>
 
-                    <textarea id="endereco"
-                        placeholder="Rua, número, bairro e complemento"></textarea>
+                    <textarea
+                        id="endereco"
+                        placeholder="Rua, número, bairro e complemento"
+                    ></textarea>
 
                 </div>
 
-                <label for="pagamento">Forma de pagamento</label>
+                <label for="pagamento">
+                    Forma de pagamento
+                </label>
 
                 <select id="pagamento" required>
                     <option value="">Selecione</option>
@@ -90,10 +114,27 @@
                     <option value="Dinheiro">Dinheiro</option>
                 </select>
 
-                <label for="observacoes">Observações</label>
+                <label for="valor">
+                    Valor do pedido (R$)
+                </label>
 
-                <textarea id="observacoes"
-                    placeholder="Sabores, detalhes, informações adicionais..."></textarea>
+                <input
+                    type="number"
+                    id="valor"
+                    min="0"
+                    step="0.01"
+                    placeholder="Ex: 75,00"
+                    required
+                >
+
+                <label for="observacoes">
+                    Observações
+                </label>
+
+                <textarea
+                    id="observacoes"
+                    placeholder="Sabores, detalhes, informações adicionais..."
+                ></textarea>
 
                 <button type="submit" class="salvar">
                     Salvar pedido
@@ -106,7 +147,7 @@
     </section>
 
 
-    <!-- MURAL -->
+    <!-- MURAL DE PEDIDOS -->
 
     <section id="mural" class="pagina">
 
@@ -115,27 +156,33 @@
         <div class="resumo">
 
             <div>
-                Todos: <strong id="total">0</strong>
+                Todos:
+                <strong id="total">0</strong>
             </div>
 
             <div>
-                Em preparo: <strong id="preparo">0</strong>
+                Em preparo:
+                <strong id="preparo">0</strong>
             </div>
 
             <div>
-                Finalizados: <strong id="finalizados">0</strong>
+                Finalizados:
+                <strong id="finalizados">0</strong>
             </div>
 
             <div>
-                Entregues: <strong id="entregues">0</strong>
+                Entregues:
+                <strong id="entregues">0</strong>
             </div>
 
             <div class="resumo-pago">
-                Pagos: <strong id="pagos">0</strong>
+                Pagos:
+                <strong id="pagos">0</strong>
             </div>
 
             <div class="resumo-pendente">
-                Não pagos: <strong id="naoPagos">0</strong>
+                Não pagos:
+                <strong id="naoPagos">0</strong>
             </div>
 
         </div>

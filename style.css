@@ -10,6 +10,8 @@ body {
     color: #333;
 }
 
+/* CABEÇALHO */
+
 header {
     background: #b51224;
     color: white;
@@ -20,6 +22,8 @@ header {
 header h1 {
     margin-bottom: 8px;
 }
+
+/* MENU */
 
 nav {
     display: flex;
@@ -44,6 +48,8 @@ nav button.active {
     color: white;
 }
 
+/* CONTEÚDO */
+
 main {
     max-width: 1200px;
     margin: 30px auto;
@@ -57,6 +63,8 @@ main {
 .pagina.active {
     display: block;
 }
+
+/* FORMULÁRIO */
 
 .formulario {
     background: white;
@@ -221,7 +229,7 @@ textarea {
     cursor: pointer;
 }
 
-/* STATUS DE PRODUÇÃO */
+/* CORES DOS STATUS */
 
 .status-pedido {
     border-color: #b51224;
@@ -239,7 +247,7 @@ textarea {
     border-color: #3478c5;
 }
 
-/* PAGAMENTO */
+/* ÁREA DE PAGAMENTO */
 
 .area-pagamento {
     margin-top: 16px;
@@ -258,6 +266,32 @@ textarea {
 
 .pagamento-pendente {
     color: #b87900;
+}
+
+/* VALOR DO PEDIDO */
+
+.area-valor {
+    margin: 15px 0;
+    padding: 12px;
+    background: #fff5f5;
+    border-radius: 8px;
+}
+
+.area-valor label {
+    display: block;
+    margin: 0 0 8px;
+    color: #b51224;
+    font-weight: bold;
+}
+
+.area-valor input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e5c5c9;
+    border-radius: 7px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #b51224;
 }
 
 /* EXCLUIR */
@@ -290,6 +324,7 @@ textarea {
 /* CELULAR */
 
 @media (max-width: 600px) {
+
     nav {
         flex-direction: column;
     }
@@ -305,4 +340,5 @@ textarea {
     .mural {
         grid-template-columns: 1fr;
     }
+
 }
