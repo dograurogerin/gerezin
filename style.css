@@ -1,0 +1,277 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff5f5;
+    color: #333;
+}
+
+/* CABEÇALHO */
+
+header {
+    background: #b51224;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 8px;
+}
+
+/* MENU */
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px;
+    background: white;
+}
+
+nav button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
+    background: #ffe5e8;
+    color: #9d1525;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+nav button.active {
+    background: #b51224;
+    color: white;
+}
+
+/* CONTEÚDO */
+
+main {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.pagina {
+    display: none;
+}
+
+.pagina.active {
+    display: block;
+}
+
+/* FORMULÁRIO */
+
+.formulario {
+    background: white;
+    max-width: 550px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #00000010;
+}
+
+.formulario h2,
+#mural h2 {
+    margin-bottom: 22px;
+    color: #b51224;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+input,
+select,
+textarea {
+    padding: 13px;
+    border: 1px solid #e5c5c9;
+    border-radius: 7px;
+    font-size: 15px;
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #e7a0a8;
+    border-color: #b51224;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.salvar {
+    margin-top: 15px;
+    padding: 14px;
+    border: none;
+    background: #b51224;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.salvar:hover {
+    background: #8e0e1c;
+}
+
+/* RESUMO DOS PEDIDOS */
+
+.resumo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.resumo div {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border-top: 4px solid #b51224;
+    flex: 1;
+    min-width: 130px;
+    text-align: center;
+}
+
+/* PESQUISA */
+
+.busca {
+    margin-bottom: 25px;
+    padding: 16px;
+    border: 2px solid #e8b9bf;
+    border-radius: 10px;
+    background: white;
+    font-size: 16px;
+}
+
+.busca:focus {
+    border-color: #b51224;
+    outline: none;
+}
+
+/* MURAL */
+
+.mural {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(260px, 1fr)
+    );
+    gap: 18px;
+}
+
+/* FICHAS */
+
+.ficha {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 6px solid #999;
+    box-shadow: 0 3px 10px #00000010;
+    overflow-wrap: anywhere;
+}
+
+.ficha h3 {
+    color: #b51224;
+    margin-bottom: 12px;
+    font-size: 19px;
+}
+
+.ficha p {
+    margin: 9px 0;
+    line-height: 1.4;
+}
+
+.ficha label {
+    display: block;
+    margin-top: 15px;
+}
+
+.ficha select {
+    margin-top: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* CORES DOS STATUS */
+
+.status-pedido {
+    border-color: #b51224;
+}
+
+.status-preparo {
+    border-color: #e5a000;
+}
+
+.status-finalizado {
+    border-color: #269b62;
+}
+
+.status-entregue {
+    border-color: #3478c5;
+}
+
+/* EXCLUIR */
+
+.ficha .excluir {
+    margin-top: 12px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #ffe5e8;
+    color: #b51224;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+}
+
+.ficha .excluir:hover {
+    background: #f5c8ce;
+}
+
+/* MENSAGEM VAZIA */
+
+.vazio {
+    color: #777;
+    text-align: center;
+    padding: 40px;
+    grid-column: 1 / -1;
+}
+
+/* CELULAR */
+
+@media (max-width: 600px) {
+
+    nav {
+        flex-direction: column;
+    }
+
+    nav button {
+        width: 100%;
+    }
+
+    .formulario {
+        padding: 20px;
+    }
+
+    .mural {
+        grid-template-columns: 1fr;
+    }
+
+}
